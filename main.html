@@ -95,7 +95,8 @@
                 layer.bindPopup(feature.properties.Amount);
               }
             },
-          }, {style:style}).addTo(map);
+            style: style,
+          }).addTo(map);
         } catch (error) {
           console.error("Error loading the GeoJSON file:", error);
         }
