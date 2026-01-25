@@ -48,7 +48,7 @@
       );
 
       const tiles = L.tileLayer(
-        "https://api.mapbox.com/styles/v1/mapbox/navigation-night-v1/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic29raHltZXJhIiwiYSI6ImNtajhpZm03OTAwazkzaXIzb2NjMWpzeTYifQ.rXpcYv8_7Fx9aNhyWEN6SA",
+        "https://api.mapbox.com/styles/v1/sokhymera/cky2jymkf0ta114kymd5a2wk9/tiles/{tileSize}/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoic29raHltZXJhIiwiYSI6ImNtajhpZm03OTAwazkzaXIzb2NjMWpzeTYifQ.rXpcYv8_7Fx9aNhyWEN6SA",
         {
           maxZoom: 19,
           attribution: '&copy; <a href="https://mapbox.com">Mapbox</a>',
@@ -57,32 +57,30 @@
 
       function getColor(d) {
         return d > 6500 
-              ? "#E31A1C"
+              ? "#011903"
               : d > 2000
-                ? "#FC4E2A"
+                ? "#014607"
                 : d > 1000
-                  ? "#FD8D3C"
+                  ? "#02730C"
                   : d > 500
-                    ? "#FEB24C"
+                    ? "#03A010"
                     : d > 100
-                      ? "#FED976"
-                      : "#FFEDA0";
+                      ? "#04CD15"
+                      : "#CCCCCC";
       }
 
       function style(feature) {
         return {
-          fillColor: getColor(feature.properties.Amount),
           weight: 2,
           opacity: 1,
-          color: "white",
-          dashArray: "3",
+          color: getColor(feature.properties.Amount),
           fillOpacity: 0.7,
         };
       }
 
       async function loadData() {
         try {
-          const response = await fetch("eutrophication_simple1.geojson");
+          const response = await fetch("eutrophication_lines1_buffer_difference1.geojson");
           const geojsonData = await response.json();
 
           const geoLayer = L.geoJSON(geojsonData, {
