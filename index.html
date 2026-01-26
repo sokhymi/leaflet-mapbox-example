@@ -43,11 +43,8 @@
     <div id="map" style="width: 1920px; height: 1080px"></div>
     <script>
       const map = L.map("map", {
-        zoomSnap: 0.5
-      }).setView(
-        [53.818113518906195, 2.88607961393051],
-        3.5,
-      );
+        zoomSnap: 0.5,
+      }).setView([53.818113518906195, 2.88607961393051], 3.5);
 
       const tiles = L.tileLayer(
         "https://api.mapbox.com/styles/v1/sokhymera/cky2jymkf0ta114kymd5a2wk9/tiles/{tileSize}/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic29raHltZXJhIiwiYSI6ImNtajhpZm03OTAwazkzaXIzb2NjMWpzeTYifQ.rXpcYv8_7Fx9aNhyWEN6SA",
@@ -58,17 +55,17 @@
       ).addTo(map);
 
       function getColor(d) {
-        return d > 6500 
-              ? "#05FA19"
-              : d > 2000
-                ? "#04CD15"
-                : d > 1000
-                  ? "#03A010"
-                  : d > 500
-                    ? "#02730C"
-                    : d > 100
-                      ? "#014607"
-                      : "#011903";
+        return d > 6500
+          ? "#05FA19"
+          : d > 2000
+            ? "#04CD15"
+            : d > 1000
+              ? "#03A010"
+              : d > 500
+                ? "#02730C"
+                : d > 100
+                  ? "#014607"
+                  : "#011903";
       }
 
       function style(feature) {
@@ -82,7 +79,9 @@
 
       async function loadData() {
         try {
-          const response = await fetch("eutrophication_lines1_buffer_difference1.geojson");
+          const response = await fetch(
+            "eutrophication_lines1_buffer_difference1.geojson",
+          );
           const geojsonData = await response.json();
 
           const geoLayer = L.geoJSON(geojsonData, {
