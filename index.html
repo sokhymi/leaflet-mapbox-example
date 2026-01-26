@@ -58,7 +58,7 @@
       }
       .info h4 {
         margin: 0 0 5px;
-        color: #777;
+        color: #5c5c5c;
         font-family: "Manrope", sans-serif;
       }
 
@@ -86,7 +86,19 @@
         font-weight: bold;
         font-size: 20px;
         font-family: "Manrope", sans-serif;
-        color: #777;
+        color: #5c5c5c;
+      }
+
+      .details {
+        padding: 6px 8px;
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+      }
+      .details h4 {
+        margin: 0 0 5px;
+        color: #5c5c5c;
+        font-family: "Manrope", sans-serif;
       }
     </style>
   </head>
@@ -186,7 +198,9 @@
       }
 
       function zoomToFeature(e) {
-        map.fitBounds(e.target.getBounds());
+        const layer = e.target;
+        map.fitBounds(layer.getBounds());
+        details.update(layer.feature.properties);
       }
 
       function onEachFeature(feature, layer) {
@@ -228,6 +242,23 @@
       };
 
       title.addTo(map);
+
+      const details = L.control({ position: "bottomleft" });
+
+      details.onAdd = function (map) {
+        this._div = L.DomUtil.create("div", "info");
+        this.update();
+        return this._div;
+      };
+
+      details.update = function (props) {
+        const contents = props
+          ? `<b>${props.NAME_ENGL}</b><br />${props.Amount.toString().substring(0, 7)} mcmol / liter<sup>2</sup>`
+          : "Hover & click on a coastal area";
+        this._div.innerHTML = `<h4>Country details</h4>${contents}`;
+      };
+
+      details.addTo(map);
     </script>
   </body>
 </html>
