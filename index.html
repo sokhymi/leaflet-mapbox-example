@@ -101,8 +101,8 @@
       info.update = function (props) {
         const contents = props
           ? `<b>${props.NAME_ENGL}</b><br />${props.Amount.toString().substring(0, 7)} mcmol / liter<sup>2</sup>`
-          : "Hover over a coastal area";
-        this._div.innerHTML = `<h4>Coastal nitrogen pollution</h4>${contents}`;
+          : "Hover & click on a coastal area";
+        this._div.innerHTML = `<h4>Coastal nitrogen concentration</h4>${contents}`;
       };
 
       info.addTo(map);
