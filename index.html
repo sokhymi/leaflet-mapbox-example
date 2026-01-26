@@ -253,7 +253,7 @@
 
       details.update = function (props) {
         const contents = props
-          ? `<b>${props.NAME_ENGL}</b><br />${props.Amount.toString().substring(0, 7)} mcmol / liter<sup>2</sup>`
+          ? `<b>${props.NAME_ENGL}</b><br />${props.CountrySpecificText}`
           : "Hover & click on a coastal area";
         this._div.innerHTML = `<h4>Country details</h4>${contents}`;
       };
