@@ -19,6 +19,12 @@
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin=""
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
@@ -46,11 +52,6 @@
       }
       .info {
         padding: 6px 8px;
-        font:
-          14px/16px Arial,
-          Helvetica,
-          sans-serif;
-        background: white;
         background: rgba(255, 255, 255, 0.8);
         box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         border-radius: 5px;
@@ -58,7 +59,13 @@
       .info h4 {
         margin: 0 0 5px;
         color: #777;
+        font-family: "Manrope", sans-serif;
       }
+
+      .info b {
+        font-family: "Manrope", sans-serif;
+      }
+
       .legend {
         text-align: left;
         line-height: 18px;
@@ -70,6 +77,16 @@
         float: left;
         margin-right: 8px;
         opacity: 0.7;
+      }
+      .map-title {
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 20px;
+        font-family: "Manrope", sans-serif;
+        color: #777;
       }
     </style>
   </head>
@@ -201,6 +218,16 @@
       };
 
       legend.addTo(map);
+
+      var title = L.control({ position: "bottomleft" });
+
+      title.onAdd = function (map) {
+        var div = L.DomUtil.create("div", "map-title");
+        div.innerHTML = "Coastal nitrogen pollution";
+        return div;
+      };
+
+      title.addTo(map);
     </script>
   </body>
 </html>
