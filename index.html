@@ -42,6 +42,8 @@
   <body>
     <div id="map" style="width: 1920px; height: 1080px"></div>
     <script>
+      let geoLayer;
+
       const map = L.map("map", {
         zoomSnap: 0.5,
       }).setView([53.818113518906195, 2.88607961393051], 3.5);
@@ -77,6 +79,21 @@
         };
       }
 
+      function highlightFeature(e) {
+        const layer = e.target;
+
+        layer.setStyle({
+          weight: 5,
+          color: "#666",
+          dashArray: "",
+          fillOpacity: 0.7,
+        });
+
+        layer.bringToFront();
+
+        info.update(layer.feature.properties);
+      }
+
       async function loadData() {
         try {
           const response = await fetch(
@@ -84,13 +101,9 @@
           );
           const geojsonData = await response.json();
 
-          const geoLayer = L.geoJSON(geojsonData, {
-            onEachFeature: function (feature, layer) {
-              if (feature.properties && feature.properties.Amount) {
-                layer.bindPopup(feature.properties.Amount);
-              }
-            },
+          geoLayer = L.geoJSON(geojsonData, {
             style: style,
+            onEachFeature
           }).addTo(map);
         } catch (error) {
           console.error("Error loading the GeoJSON file:", error);
@@ -98,6 +111,23 @@
       }
 
       loadData();
+
+      function resetHighlight(e) {
+        geoLayer.resetStyle(e.target);
+        info.update();
+      }
+
+      function zoomToFeature(e) {
+        map.fitBounds(e.target.getBounds());
+      }
+
+      function onEachFeature(feature, layer) {
+        layer.on({
+          mouseover: highlightFeature,
+          mouseout: resetHighlight,
+          click: zoomToFeature,
+        });
+      }
     </script>
   </body>
 </html>
